@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: translate-app
+    runtime: static
+    buildCommand: npm run build:web
+    staticPublishPath: ./render-site

@@ -5,6 +5,7 @@
   "main": "electron-main.js",
   "scripts": {
   "start": "npx serve . --single",         
+  "build:web": "node build-web.js",
   "electron-start": "electron .",          
   "package:all": "electron-packager . TranslateApp --overwrite --asar=false --ignore=config[.]json",
   "package:win": "electron-packager . TranslateApp --platform=win32 --arch=x64 --overwrite --asar=false --ignore=config[.]json",

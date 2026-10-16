@@ -14,6 +14,13 @@ npx serve . --single
 
 2. Open the printed URL in your browser (works on desktop and mobile browsers).
 
+Deploy as a website on Render
+-----------------------------
+
+This repository includes a Render Blueprint for the web version. In Render, choose **New** > **Blueprint**, connect this repository, and deploy. Render runs `npm run build:web` and publishes the `render-site` folder. The Electron desktop build remains separate.
+
+The deployed website does not include `config.json`. Do not put private API tokens in files served to browsers; browser-side configuration is visible to visitors. The web app runs with its built-in defaults unless you add a backend for secret-backed AI services.
+
 AI Features (Requires Hugging Face Token)
 -----------------------------------------
 
