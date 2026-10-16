@@ -11,4 +11,10 @@ for (const file of webFiles) {
   fs.copyFileSync(path.join(__dirname, file), path.join(outputDirectory, file));
 }
 
-console.log(`Prepared ${webFiles.length} web assets in render-site/`);
+fs.mkdirSync(path.join(outputDirectory, "icons"), { recursive: true });
+fs.copyFileSync(
+  path.join(__dirname, "icons", "app-icon.svg"),
+  path.join(outputDirectory, "icons", "app-icon.svg")
+);
+
+console.log(`Prepared web assets and PWA icon in render-site/`);
