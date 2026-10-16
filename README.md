@@ -17,7 +17,9 @@ npx serve . --single
 Deploy as a website on Render
 -----------------------------
 
-This repository includes a Render Blueprint for the web version. In Render, choose **New** > **Blueprint**, connect this repository, and deploy. Render runs `npm run build:web` and publishes the `render-site` folder. The Electron desktop build remains separate.
+This repository includes a Render Blueprint. In Render, choose **New** > **Blueprint**, connect this repository, and deploy. Render runs `npm run build:web` and publishes the `render-site` folder.
+
+The deployed site is an installable Progressive Web App (PWA). Open its HTTPS URL in a supported browser and use the browser's **Install app** option; on iPhone or iPad, use Safari's **Add to Home Screen** action.
 
 The deployed website does not include `config.json`. Do not put private API tokens in files served to browsers; browser-side configuration is visible to visitors. The web app runs with its built-in defaults unless you add a backend for secret-backed AI services.
 
@@ -40,24 +42,5 @@ Notes
 - OCR powered by Tesseract.js (fallback) or AI (TrOCR).
 - Translation uses AI (M2M100) or fallback to LibreTranslate if configured.
 - Document identification uses AI to classify type.
-- Saving prompts download; Electron supports direct save.
+- Saving downloads the PDF or opens the browser's save dialog when supported.
 - Authentication is demo (localStorage); use Firebase for production.
-
-Electron (desktop builds)
-------------------------
-
-To run the app as a desktop application with Electron (dev):
-
-```bash
-npm install --save-dev electron
-npm run electron-start
-```
-
-To package builds (requires `electron-packager`):
-
-```bash
-npm install --save-dev electron-packager
-npm run package:all
-```
-
-Note: Packaging and distribution steps may require platform-specific tools and signing certificates for macOS.

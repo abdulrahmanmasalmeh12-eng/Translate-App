@@ -1,23 +1,11 @@
 {
   "name": "translate-app",
   "version": "0.1.0",
-  "description": "Image-to-translation demo web app (client-side)",
-  "main": "electron-main.js",
+  "description": "Installable photo-to-translation web app",
   "scripts": {
-  "start": "npx serve . --single",         
-  "build:web": "node build-web.js",
-  "electron-start": "electron .",          
-  "package:all": "electron-packager . TranslateApp --overwrite --asar=false --ignore=config[.]json",
-  "package:win": "electron-packager . TranslateApp --platform=win32 --arch=x64 --overwrite --asar=false --ignore=config[.]json",
-  "package:mac": "electron-packager . TranslateApp --platform=darwin --arch=x64 --overwrite --asar=false --ignore=config[.]json",
-  "installer:win": "npm run package:win && electron-winstaller --src TranslateApp-win32-x64 --dest dist/ --exe TranslateApp.exe"
-}
-
-  ,"author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "electron": "^25.0.0",
-    "electron-packager": "^17.1.1",
-    "electron-winstaller": "^5.1.0"
-  }
+    "start": "npx serve . --single",
+    "build:web": "node build-web.js"
+  },
+  "author": "",
+  "license": "MIT"
 }

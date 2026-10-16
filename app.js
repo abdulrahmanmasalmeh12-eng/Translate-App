@@ -758,10 +758,7 @@ function docsKey(){ return `translateapp_docs_${localStorage.getItem(currentKey(
 function loadDocsList(){ docsList.innerHTML=''; const docs = JSON.parse(localStorage.getItem(docsKey())||'[]'); docs.forEach((d,i)=>{
 	const li = document.createElement('li'); li.textContent = d.name + ' — ' + new Date(d.date).toLocaleString();
   const dl = document.createElement('div'); const open = document.createElement('button'); open.textContent='Open'; open.addEventListener('click',async()=>{
-    if(window.electronAPI && d.path){ // Electron saved file
-      const result = await window.electronAPI.openFile(d.path);
-      if(!result.ok) alert('Open failed: '+result.error);
-    } else if(d.url){ // Browser blob URL
+		if(d.url){
       window.open(d.url);
     } else {
       alert('File not available');
@@ -778,22 +775,7 @@ saveBtn.addEventListener('click',async()=>{
 		const doc = new jsPDF(); const lines = doc.splitTextToSize(text, 170);
 		doc.text(lines, 10, 10);
 		const blob = doc.output('blob');
-		// If running in Electron, use secure IPC to save file; otherwise try File System Access API or download
-		if(window.electronAPI && window.electronAPI.saveFile){
-			const arrayBuffer = await blob.arrayBuffer();
-			const bytes = new Uint8Array(arrayBuffer);
-			// convert to base64 for IPC
-			let binary = '';
-			for(let i=0;i<bytes.length;i+=16384){ binary += String.fromCharCode.apply(null, bytes.subarray(i, i+16384)); }
-			const base64 = btoa(binary);
-			const result = await window.electronAPI.saveFile(base64, 'translation.pdf');
-			if(result && result.ok){ 
-				alert('Saved: '+result.path); 
-				// Store in docs list with path
-				const docs = JSON.parse(localStorage.getItem(docsKey())||'[]'); const rec = {name:'translation.pdf',date:Date.now(),path:result.path}; docs.unshift(rec); localStorage.setItem(docsKey(),JSON.stringify(docs)); loadDocsList();
-			}
-			else alert('Save canceled or failed');
-		} else if(window.showSaveFilePicker){
+		if(window.showSaveFilePicker){
 			const handle = await window.showSaveFilePicker({suggestedName:'translation.pdf',types:[{description:'PDF',accept:{'application/pdf':['.pdf']}}]});
 			const writable = await handle.createWritable(); await writable.write(blob); await writable.close();
 			alert('Saved to chosen folder');
