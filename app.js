@@ -1,6 +1,39 @@
 // Translate App - client-only demo
 const $ = id => document.getElementById(id);
 
+const installButton = $('install-app-btn');
+const installStatus = $('install-status');
+let deferredInstallPrompt;
+
+window.addEventListener('beforeinstallprompt', event => {
+	event.preventDefault();
+	deferredInstallPrompt = event;
+});
+
+installButton.addEventListener('click', async () => {
+	if (!deferredInstallPrompt) {
+		installStatus.textContent = 'In Chrome or Edge, open the browser menu and choose "Install Translate App".';
+		installStatus.hidden = false;
+		return;
+	}
+
+	deferredInstallPrompt.prompt();
+	const { outcome } = await deferredInstallPrompt.userChoice;
+	installStatus.textContent = outcome === 'accepted' ? 'Translate App installed.' : 'Installation canceled.';
+	installStatus.hidden = false;
+	deferredInstallPrompt = null;
+});
+
+window.addEventListener('appinstalled', () => {
+	installButton.hidden = true;
+	installStatus.textContent = 'Translate App installed.';
+	installStatus.hidden = false;
+});
+
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+	installButton.hidden = true;
+}
+
 // Load optional runtime config (config.json). If not present, use defaults.
 let CONFIG = { translateEndpoint: 'https://api.mymemory.translated.net/get' };
 let firebaseAvailable = false;

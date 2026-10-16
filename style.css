@@ -129,6 +129,27 @@ header {
   margin-bottom: 12px;
   transition: color 0.3s;
 }
+.auth-title-row,
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.auth-title-row {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.auth-actions {
+  flex-wrap: wrap;
+}
+.install-status {
+  margin: 0 0 12px;
+  color: var(--muted-light);
+  font-size: 0.9rem;
+}
+body.dark .install-status {
+  color: var(--muted-dark);
+}
 .row {
   display: flex;
   gap: 10px;
@@ -240,23 +261,6 @@ body.dark #docs-list li {
 /* =====================
    PWA Install Button
 ===================== */
-#install-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 12px 22px;
-  border-radius: var(--radius);
-  font-weight: 600;
-  cursor: pointer;
-  display: none;
-  z-index: 9999;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-  transition: background 0.2s, transform 0.1s;
-}
-body.light #install-btn { background-color: var(--accent-light); color: #fff; }
-body.dark #install-btn { background-color: var(--accent-dark); color: #fff; }
-#install-btn:hover { transform: translateY(-2px); }
-
 /* =====================
    Responsive
 ===================== */

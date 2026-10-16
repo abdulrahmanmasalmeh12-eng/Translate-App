@@ -11,10 +11,14 @@
 <body>
 	<main id="app">
 		<section id="auth-screen" class="card">
-			<div style="display: flex; flex-direction: column; align-items: center;">
+			<div class="auth-title-row">
 				<h1 style="text-align: center; margin-bottom: 8px;">DocTranslation</h1>
-				<button id="theme-toggle-btn-auth" type="button" title="Toggle light/dark mode" style="margin-bottom: 12px; align-self: flex-end;">🌙</button>
+				<div class="auth-actions">
+					<button id="install-app-btn" type="button" title="Install Translate App on this device">Install app</button>
+					<button id="theme-toggle-btn-auth" type="button" title="Toggle light/dark mode">🌙</button>
+				</div>
 			</div>
+			<p id="install-status" class="install-status" role="status" aria-live="polite" hidden></p>
 			<div style="margin-bottom:10px">
 				<label for="app-lang-select-auth"><b>App Language:</b></label>
 				<select id="app-lang-select-auth">
