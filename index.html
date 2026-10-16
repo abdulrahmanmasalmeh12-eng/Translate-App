@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Translate App</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" href="style.css">
+	<script defer src="app.js"></script>
+</head>
+<body>
+	<main id="app">
+		<section id="auth-screen" class="card">
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<h1 style="text-align: center; margin-bottom: 8px;">DocTranslation</h1>
+				<button id="theme-toggle-btn-auth" type="button" title="Toggle light/dark mode" style="margin-bottom: 12px; align-self: flex-end;">🌙</button>
+			</div>
+			<div style="margin-bottom:10px">
+				<label for="app-lang-select-auth"><b>App Language:</b></label>
+				<select id="app-lang-select-auth">
+					<option value="en">English</option>
+					<option value="es">Español</option>
+					<option value="fr">Français</option>
+				</select>
+			</div>
+			<p id="auth-message">Sign up or log in to continue</p>
+			<form id="auth-form">
+				<input id="auth-identifier" placeholder="Email or phone" required />
+				<input id="auth-password" type="password" placeholder="Password" required />
+				<div id="recaptcha-container"></div>
+				<div class="row">
+					<button id="signup-btn" type="button">Sign Up</button>
+					<button id="login-btn" type="button">Log In</button>
+					<button id="forgot-btn" type="button" style="margin-left:10px; color:#007bff; background:none; border:none; text-decoration:underline; cursor:pointer;">Forgot password?</button>
+				</div>
+				<div id="auth-error" style="color:red; margin-top:6px; min-height:18px;"></div>
+			</form>
+		</section>
+
+
+
+		<section id="main-screen" class="hidden">
+			<div id="welcome-banner">
+				Welcome <span id="user-label"></span>
+			</div>
+			<header>
+				<div style="display: flex; align-items: center; gap: 10px;">
+					<label for="app-lang-select-main"><b>App Language:</b></label>
+					<select id="app-lang-select-main">
+						<option value="en">English</option>
+						<option value="es">Español</option>
+						<option value="fr">Français</option>
+					</select>
+					<button id="theme-toggle-btn" type="button" title="Toggle light/dark mode">🌙</button>
+					<button id="logout-btn">Log out</button>
+				</div>
+			</header>
+
+			<div class="card">
+				<h2>Capture or Upload Photo</h2>
+				<div class="row">
+					<button id="start-camera">Take Photo</button>
+					<input id="file-input" type="file" accept="image/*" />
+				</div>
+				<div id="camera-area" class="hidden">
+					<video id="video" autoplay playsinline></video>
+					<button id="capture-btn">Capture</button>
+					<button id="stop-camera">Close Camera</button>
+				</div>
+				<canvas id="preview" class="hidden"></canvas>
+				<img id="preview-img" alt="preview" class="hidden" />
+			</div>
+
+			<div class="card">
+				<h2>Translate</h2>
+				<label>Target language
+					<select id="lang-select"></select>
+				</label>
+				<div class="row">
+					<button id="extract-translate">Extract & Translate</button>
+					<button id="save-doc">Save Document</button>
+					<button id="tts-btn">Read Aloud</button>
+					<button id="tts-stop-btn" type="button">Stop</button>
+				</div>
+				<p id="doc-type" style="font-weight:bold;"></p>
+				<textarea id="translated-text" placeholder="Translated text will appear here"></textarea>
+			</div>
+
+			<div class="card">
+				<h3>Saved Documents</h3>
+				<ul id="docs-list"></ul>
+			</div>
+		</section>
+	</main>
+
+	<script src="https://unpkg.com/tesseract.js@v4.0.2/dist/tesseract.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
