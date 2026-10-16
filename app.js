@@ -1,37 +1,45 @@
 // Translate App - client-only demo
 const $ = id => document.getElementById(id);
 
-const installButton = $('install-app-btn');
-const installStatus = $('install-status');
+const installButtons = [$('install-app-btn'), $('install-app-btn-main')];
+const installStatuses = [$('install-status'), $('install-status-main')];
 let deferredInstallPrompt;
+
+function setInstallStatus(message) {
+	for (const status of installStatuses) {
+		status.textContent = message;
+		status.hidden = false;
+	}
+}
 
 window.addEventListener('beforeinstallprompt', event => {
 	event.preventDefault();
 	deferredInstallPrompt = event;
 });
 
-installButton.addEventListener('click', async () => {
+async function installApp() {
 	if (!deferredInstallPrompt) {
-		installStatus.textContent = 'In Chrome or Edge, open the browser menu and choose "Install Translate App".';
-		installStatus.hidden = false;
+		setInstallStatus('In Chrome or Edge, open the browser menu and choose "Install Translate App".');
 		return;
 	}
 
 	deferredInstallPrompt.prompt();
 	const { outcome } = await deferredInstallPrompt.userChoice;
-	installStatus.textContent = outcome === 'accepted' ? 'Translate App installed.' : 'Installation canceled.';
-	installStatus.hidden = false;
+	setInstallStatus(outcome === 'accepted' ? 'Translate App installed.' : 'Installation canceled.');
 	deferredInstallPrompt = null;
-});
+}
+
+for (const button of installButtons) {
+	button.addEventListener('click', installApp);
+}
 
 window.addEventListener('appinstalled', () => {
-	installButton.hidden = true;
-	installStatus.textContent = 'Translate App installed.';
-	installStatus.hidden = false;
+	for (const button of installButtons) button.hidden = true;
+	setInstallStatus('Translate App installed.');
 });
 
 if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-	installButton.hidden = true;
+	for (const button of installButtons) button.hidden = true;
 }
 
 // Load optional runtime config (config.json). If not present, use defaults.

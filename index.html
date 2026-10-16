@@ -48,7 +48,8 @@
 				Welcome <span id="user-label"></span>
 			</div>
 			<header>
-				<div style="display: flex; align-items: center; gap: 10px;">
+				<div class="main-toolbar">
+					<button id="install-app-btn-main" type="button" title="Install Translate App on this device">Install app</button>
 					<label for="app-lang-select-main"><b>App Language:</b></label>
 					<select id="app-lang-select-main">
 						<option value="en">English</option>
@@ -59,6 +60,7 @@
 					<button id="logout-btn">Log out</button>
 				</div>
 			</header>
+			<p id="install-status-main" class="install-status" role="status" aria-live="polite" hidden></p>
 
 			<div class="card">
 				<h2>Capture or Upload Photo</h2>

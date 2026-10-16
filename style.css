@@ -142,6 +142,12 @@ header {
 .auth-actions {
   flex-wrap: wrap;
 }
+.main-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 .install-status {
   margin: 0 0 12px;
   color: var(--muted-light);

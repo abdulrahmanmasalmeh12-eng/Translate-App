@@ -1,4 +1,4 @@
-const CACHE_NAME = 'translate-app-v1';
+const CACHE_NAME = 'translate-app-v2';
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
@@ -17,7 +17,13 @@ self.addEventListener('install', e => {
 
 // Activate SW immediately
 self.addEventListener('activate', e => {
-  e.waitUntil(self.clients.claim());
+  e.waitUntil(
+    caches.keys().then(cacheNames => Promise.all(
+      cacheNames
+        .filter(cacheName => cacheName.startsWith('translate-app-') && cacheName !== CACHE_NAME)
+        .map(cacheName => caches.delete(cacheName))
+    )).then(() => self.clients.claim())
+  );
 });
 
 // Serve cached files if offline
